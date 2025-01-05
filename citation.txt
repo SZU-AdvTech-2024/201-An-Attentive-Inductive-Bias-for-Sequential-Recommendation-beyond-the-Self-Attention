@@ -1,0 +1,9 @@
+@inproceedings{REPO201,
+    author = "Shin, Yehjin and Choi, Jeongwhan and Wi, Hyowon and Park, Noseong",
+    booktitle = "Proceedings of the AAAI Conference on Artificial Intelligence",
+    number = "8",
+    pages = "8984--8992",
+    title = "{An attentive inductive bias for sequential recommendation beyond the self-attention}",
+    volume = "38",
+    year = "2024"
+}
