@@ -1,0 +1,22 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: bsarec main.py with Arguments",
+            "type": "debugpy",  
+            "request": "launch",
+            "program": "${workspaceFolder}/src/main.py",  // 使用绝对路径或相对于工作区的路径
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args": [
+                "--data_name", "Beauty",
+                "--load_model", "BSARec_Beauty_best",
+                "--do_eval"
+            ],
+            "cwd": "${workspaceFolder}/src",  // 设置工作目录为 src 文件夹
+            "env": {  // 如果需要，可以在这里设置环境变量
+                "PYTHONPATH": "${workspaceFolder}"
+            }
+        }
+    ]
+}

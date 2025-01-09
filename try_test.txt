@@ -1,0 +1,299 @@
+对 Beauty 数据集的处理：
+
+python main.py  --model_type BSARec_S_A \
+                --data_name Beauty \
+                --lr 0.0005 \
+                --alpha 0.7 \
+                --c 5 \
+                --num_attention_heads 1 \
+                --train_name BSARec_S_A_Beauty
+
+python main.py  --model_type BSARec_SA_S \
+                --data_name Beauty \
+                --lr 0.0005 \
+                --alpha 0.7 \
+                --c 5 \
+                --num_attention_heads 1 \
+                --train_name BSARec_SA_S_Beauty
+
+python main.py  --model_type BSARec_SA_A \
+                --data_name Beauty \
+                --lr 0.0005 \
+                --alpha 0.7 \
+                --c 5 \
+                --num_attention_heads 1 \
+                --train_name BSARec_SA_A_Beauty
+
+python main.py  --model_type BSARec_SA_S_A \
+                --data_name Beauty \
+                --lr 0.0005 \
+                --alpha 0.7 \
+                --c 5 \
+                --num_attention_heads 1 \
+                --train_name BSARec_SA_S_A_Beauty
+                
+python main.py  --model_type BSARec_S \
+                --data_name Beauty \
+                --lr 0.0005 \
+                --alpha 0.7 \
+                --c 5 \
+                --num_attention_heads 1 \
+                --train_name BSARec_S_Beauty
+
+python main.py  --model_type BSARec_A \
+                --data_name Beauty \
+                --lr 0.0005 \
+                --alpha 0.7 \
+                --c 5 \
+                --num_attention_heads 1 \
+                --train_name BSARec_A_Beauty
+
+对 LastFM 数据集的处理：
+
+python main.py  --model_type BSARec_S_A \
+                --data_name LastFM \
+                --lr 0.0005 \
+                --alpha 0.7 \
+                --c 5 \
+                --num_attention_heads 1 \
+                --train_name BSARec_S_A_LastFM
+
+python main.py  --model_type BSARec_SA_S \
+                --data_name LastFM \
+                --lr 0.0005 \
+                --alpha 0.7 \
+                --c 5 \
+                --num_attention_heads 1 \
+                --train_name BSARec_SA_S_LastFM
+
+python main.py  --model_type BSARec_SA_A \
+                --data_name LastFM \
+                --lr 0.0005 \
+                --alpha 0.7 \
+                --c 5 \
+                --num_attention_heads 1 \
+                --train_name BSARec_SA_A_LastFM
+
+python main.py  --model_type BSARec_SA_S_A \
+                --data_name LastFM \
+                --lr 0.0005 \
+                --alpha 0.7 \
+                --c 5 \
+                --num_attention_heads 1 \
+                --train_name BSARec_SA_S_A_LastFM
+                
+python main.py  --model_type BSARec_S \
+                --data_name LastFM \
+                --lr 0.0005 \
+                --alpha 0.7 \
+                --c 5 \
+                --num_attention_heads 1 \
+                --train_name BSARec_S_LastFM
+
+python main.py  --model_type BSARec_A \
+                --data_name LastFM \
+                --lr 0.0005 \
+                --alpha 0.7 \
+                --c 5 \
+                --num_attention_heads 1 \
+                --train_name BSARec_A_LastFM
+
+对 ML-1M 数据集的处理：
+
+python main.py  --model_type BSARec_S_A \
+                --data_name ML-1M \
+                --lr 0.0005 \
+                --alpha 0.7 \
+                --c 5 \
+                --num_attention_heads 1 \
+                --train_name BSARec_S_A_ML-1M
+
+python main.py  --model_type BSARec_SA_S \
+                --data_name ML-1M \
+                --lr 0.0005 \
+                --alpha 0.7 \
+                --c 5 \
+                --num_attention_heads 1 \
+                --train_name BSARec_SA_S_ML-1M
+
+python main.py  --model_type BSARec_SA_A \
+                --data_name ML-1M \
+                --lr 0.0005 \
+                --alpha 0.7 \
+                --c 5 \
+                --num_attention_heads 1 \
+                --train_name BSARec_SA_A_ML-1M
+
+python main.py  --model_type BSARec_SA_S_A \
+                --data_name ML-1M \
+                --lr 0.0005 \
+                --alpha 0.7 \
+                --c 5 \
+                --num_attention_heads 1 \
+                --train_name BSARec_SA_S_A_ML-1M
+                
+python main.py  --model_type BSARec_S \
+                --data_name ML-1M \
+                --lr 0.0005 \
+                --alpha 0.7 \
+                --c 5 \
+                --num_attention_heads 1 \
+                --train_name BSARec_S_ML-1M
+
+python main.py  --model_type BSARec_A \
+                --data_name ML-1M \
+                --lr 0.0005 \
+                --alpha 0.7 \
+                --c 5 \
+                --num_attention_heads 1 \
+                --train_name BSARec_A_ML-1M
+
+对 Sports_and_Outdoors 数据集的处理：
+
+python main.py  --model_type BSARec_S_A \
+                --data_name Sports_and_Outdoors \
+                --lr 0.0005 \
+                --alpha 0.7 \
+                --c 5 \
+                --num_attention_heads 1 \
+                --train_name BSARec_S_A_Sports_and_Outdoors
+
+python main.py  --model_type BSARec_SA_S \
+                --data_name Sports_and_Outdoors \
+                --lr 0.0005 \
+                --alpha 0.7 \
+                --c 5 \
+                --num_attention_heads 1 \
+                --train_name BSARec_SA_S_Sports_and_Outdoors
+
+python main.py  --model_type BSARec_SA_A \
+                --data_name Sports_and_Outdoors \
+                --lr 0.0005 \
+                --alpha 0.7 \
+                --c 5 \
+                --num_attention_heads 1 \
+                --train_name BSARec_SA_A_Sports_and_Outdoors
+
+python main.py  --model_type BSARec_SA_S_A \
+                --data_name Sports_and_Outdoors \
+                --lr 0.0005 \
+                --alpha 0.7 \
+                --c 5 \
+                --num_attention_heads 1 \
+                --train_name BSARec_SA_S_A_Sports_and_Outdoors
+                
+python main.py  --model_type BSARec_S \
+                --data_name Sports_and_Outdoors \
+                --lr 0.0005 \
+                --alpha 0.7 \
+                --c 5 \
+                --num_attention_heads 1 \
+                --train_name BSARec_S_Sports_and_Outdoors
+
+python main.py  --model_type BSARec_A \
+                --data_name Sports_and_Outdoors \
+                --lr 0.0005 \
+                --alpha 0.7 \
+                --c 5 \
+                --num_attention_heads 1 \
+                --train_name BSARec_A_Sports_and_Outdoors
+
+对 Toys_and_Games 数据集的处理：
+
+python main.py  --model_type BSARec_S_A \
+                --data_name Toys_and_Games \
+                --lr 0.0005 \
+                --alpha 0.7 \
+                --c 5 \
+                --num_attention_heads 1 \
+                --train_name BSARec_S_A_Toys_and_Games
+
+python main.py  --model_type BSARec_SA_S \
+                --data_name Toys_and_Games \
+                --lr 0.0005 \
+                --alpha 0.7 \
+                --c 5 \
+                --num_attention_heads 1 \
+                --train_name BSARec_SA_S_Toys_and_Games
+
+python main.py  --model_type BSARec_SA_A \
+                --data_name Toys_and_Games \
+                --lr 0.0005 \
+                --alpha 0.7 \
+                --c 5 \
+                --num_attention_heads 1 \
+                --train_name BSARec_SA_A_Toys_and_Games
+
+python main.py  --model_type BSARec_SA_S_A \
+                --data_name Toys_and_Games \
+                --lr 0.0005 \
+                --alpha 0.7 \
+                --c 5 \
+                --num_attention_heads 1 \
+                --train_name BSARec_SA_S_A_Toys_and_Games
+                
+python main.py  --model_type BSARec_S \
+                --data_name Toys_and_Games \
+                --lr 0.0005 \
+                --alpha 0.7 \
+                --c 5 \
+                --num_attention_heads 1 \
+                --train_name BSARec_S_Toys_and_Games
+
+python main.py  --model_type BSARec_A \
+                --data_name Toys_and_Games \
+                --lr 0.0005 \
+                --alpha 0.7 \
+                --c 5 \
+                --num_attention_heads 1 \
+                --train_name BSARec_A_Toys_and_Games
+             
+对 Yelp 数据集的处理：
+
+python main.py  --model_type BSARec_S_A \
+                --data_name Yelp \
+                --lr 0.0005 \
+                --alpha 0.7 \
+                --c 5 \
+                --num_attention_heads 1 \
+                --train_name BSARec_S_A_Yelp
+
+python main.py  --model_type BSARec_SA_S \
+                --data_name Yelp \
+                --lr 0.0005 \
+                --alpha 0.7 \
+                --c 5 \
+                --num_attention_heads 1 \
+                --train_name BSARec_SA_S_Yelp
+
+python main.py  --model_type BSARec_SA_A \
+                --data_name Yelp \
+                --lr 0.0005 \
+                --alpha 0.7 \
+                --c 5 \
+                --num_attention_heads 1 \
+                --train_name BSARec_SA_A_Yelp
+
+python main.py  --model_type BSARec_SA_S_A \
+                --data_name Yelp \
+                --lr 0.0005 \
+                --alpha 0.7 \
+                --c 5 \
+                --num_attention_heads 1 \
+                --train_name BSARec_SA_S_A_Yelp
+                
+python main.py  --model_type BSARec_S \
+                --data_name Yelp \
+                --lr 0.0005 \
+                --alpha 0.7 \
+                --c 5 \
+                --num_attention_heads 1 \
+                --train_name BSARec_S_Yelp
+
+python main.py  --model_type BSARec_A \
+                --data_name Yelp \
+                --lr 0.0005 \
+                --alpha 0.7 \
+                --c 5 \
+                --num_attention_heads 1 \
+                --train_name BSARec_A_Yelp

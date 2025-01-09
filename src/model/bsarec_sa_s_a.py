@@ -1,0 +1,133 @@
+import copy
+import torch
+import torch.nn as nn
+from model._abstract_model import SequentialRecModel
+from model._modules import LayerNorm, FeedForward, MultiHeadAttention
+
+class BSARecModel_SA_S_A(SequentialRecModel):
+    def __init__(self, args):
+        super(BSARecModel_SA_S_A, self).__init__(args)
+        self.args = args
+        self.LayerNorm = LayerNorm(args.hidden_size, eps=1e-12)
+        self.dropout = nn.Dropout(args.hidden_dropout_prob)
+        self.item_encoder = BSARecEncoder(args)
+        self.apply(self.init_weights)
+
+    def forward(self, input_ids, user_ids=None, all_sequence_output=False):
+        extended_attention_mask = self.get_attention_mask(input_ids)
+        sequence_emb = self.add_position_embedding(input_ids)
+        item_encoded_layers = self.item_encoder(sequence_emb,
+                                                extended_attention_mask,
+                                                output_all_encoded_layers=True,
+                                                )               
+        if all_sequence_output:
+            sequence_output = item_encoded_layers
+        else:
+            sequence_output = item_encoded_layers[-1]
+
+        return sequence_output
+
+    def calculate_loss(self, input_ids, answers, neg_answers, same_target, user_ids):
+        seq_output = self.forward(input_ids)
+        seq_output = seq_output[:, -1, :]
+        item_emb = self.item_embeddings.weight
+        logits = torch.matmul(seq_output, item_emb.transpose(0, 1))
+        loss = nn.CrossEntropyLoss()(logits, answers)
+
+        return loss
+
+class BSARecEncoder(nn.Module):
+    def __init__(self, args):
+        super(BSARecEncoder, self).__init__()
+        self.args = args
+        block = BSARecBlock(args)
+        self.blocks = nn.ModuleList([copy.deepcopy(block) for _ in range(args.num_hidden_layers)])
+
+    def forward(self, hidden_states, attention_mask, output_all_encoded_layers=False):
+        all_encoder_layers = [ hidden_states ]
+        for layer_module in self.blocks:
+            hidden_states = layer_module(hidden_states, attention_mask)
+            if output_all_encoded_layers:
+                all_encoder_layers.append(hidden_states)
+        if not output_all_encoded_layers:
+            all_encoder_layers.append(hidden_states) # hidden_states => torch.Size([256, 50, 64])
+        return all_encoder_layers
+
+class ModalityFusion(nn.Module):
+    def __init__(self):
+        super(ModalityFusion, self).__init__()
+        # 初始化权重参数，可以是可学习的
+        self.weight_d = nn.Parameter(torch.tensor(0.33))
+        self.weight_g = nn.Parameter(torch.tensor(0.33))
+        self.weight_t = nn.Parameter(torch.tensor(0.34))
+
+    def forward(self, feedforward_output_d, feedforward_output_g, feedforward_output_t):
+        # 确保权重之和为1
+        weight_sum = self.weight_d + self.weight_g + self.weight_t
+        normalized_weight_d = self.weight_d / weight_sum
+        normalized_weight_g = self.weight_g / weight_sum
+        normalized_weight_t = self.weight_t / weight_sum
+        
+        # 加权求和
+        fused_output = (
+            normalized_weight_d * feedforward_output_d +
+            normalized_weight_g * feedforward_output_g +
+            normalized_weight_t * feedforward_output_t
+        )
+        return fused_output
+
+class BSARecBlock(nn.Module):
+    def __init__(self, args):
+        super(BSARecBlock, self).__init__()
+        self.layer = BSARecLayer(args)
+        self.feed_forward_sa = FeedForward(args)
+        self.feed_forward_g = FeedForward(args)
+        self.feed_forward_d = FeedForward(args)
+        self.fusion_module = ModalityFusion()
+
+    def forward(self, hidden_states, attention_mask):
+        sa, gsp, dsp = self.layer(hidden_states, attention_mask)
+        feedforward_output_sa = self.feed_forward_sa(sa)
+        feedforward_output_g = self.feed_forward_g(gsp)
+        feedforward_output_d = self.feed_forward_d(dsp)
+        fused_output = self.fusion_module(feedforward_output_sa, feedforward_output_g, feedforward_output_d)
+        return fused_output
+
+class BSARecLayer(nn.Module):
+    def __init__(self, args):
+        super(BSARecLayer, self).__init__()
+        self.args = args
+        self.filter_layer = FrequencyLayer(args)
+        self.attention_layer = MultiHeadAttention(args)
+        self.alpha = args.alpha
+
+    def forward(self, input_tensor, attention_mask):
+        dsp = self.filter_layer(input_tensor)
+        gsp = self.attention_layer(input_tensor, attention_mask)
+        sa = self.alpha * dsp + ( 1 - self.alpha ) * gsp
+
+        return sa, gsp, dsp
+    
+class FrequencyLayer(nn.Module):
+    def __init__(self, args):
+        super(FrequencyLayer, self).__init__()
+        self.out_dropout = nn.Dropout(args.hidden_dropout_prob)
+        self.LayerNorm = LayerNorm(args.hidden_size, eps=1e-12)
+        self.c = args.c // 2 + 1
+        self.sqrt_beta = nn.Parameter(torch.randn(1, 1, args.hidden_size))
+
+    def forward(self, input_tensor):
+        # [batch, seq_len, hidden]
+        batch, seq_len, hidden = input_tensor.shape
+        x = torch.fft.rfft(input_tensor, dim=1, norm='ortho')
+
+        low_pass = x[:]
+        low_pass[:, self.c:, :] = 0
+        low_pass = torch.fft.irfft(low_pass, n=seq_len, dim=1, norm='ortho')
+        high_pass = input_tensor - low_pass
+        sequence_emb_fft = low_pass + (self.sqrt_beta**2) * high_pass
+
+        hidden_states = self.out_dropout(sequence_emb_fft)
+        hidden_states = self.LayerNorm(hidden_states + input_tensor)
+
+        return hidden_states
